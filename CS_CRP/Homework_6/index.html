@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starfall - Catch Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 class="game-title">
+    <svg class="title-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"/></svg>
+    Starfall
+    <svg class="title-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"/></svg>
+  </h1>
+  <div id="game-container">
+    <canvas id="game-canvas" aria-label="Starfall catch game">Your browser does not support canvas.</canvas>
+    <button id="pause-btn" class="hud-btn" type="button" aria-label="Pause game" aria-pressed="false" title="Pause / resume (P or Esc)" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path class="icon-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>
+        <path class="icon-play" d="M8 5.5v13l10.5-6.5z"/>
+      </svg>
+    </button>
+    <button id="mute-btn" class="hud-btn" type="button" aria-label="Mute sound" aria-pressed="false" title="Mute / unmute (M)">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path class="icon-speaker" d="M4 9h4l5-4v14l-5-4H4z"/>
+        <path class="icon-waves" d="M16 8.5a4.5 4.5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12"/>
+        <path class="icon-x" d="M16 9l6 6M22 9l-6 6"/>
+      </svg>
+    </button>
+    <div id="pause-menu" hidden>
+      <button id="resume-btn" class="menu-btn" type="button">Resume</button>
+      <button id="quit-btn" class="menu-btn" type="button">Quit to menu</button>
+    </div>
+    <button id="reset-btn" class="text-btn" type="button" title="Erase high score and stats" hidden>Reset data</button>
+  </div>
+  <p class="controls"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> / <kbd>A</kbd> <kbd>D</kbd> / mouse / touch to move &middot; <kbd>Space</kbd> / <kbd>Enter</kbd> / click to start &middot; <kbd>P</kbd> pause &middot; <kbd>M</kbd> mute</p>
+  <script src="script.js"></script>
+</body>
+</html>
