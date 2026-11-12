@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-accent="coral" data-wallpaper="aurora">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khuzaima Amir · Portfolio OS</title>
+  <meta name="description" content="Khuzaima Amir's portfolio, built as a macOS-style desktop. Open apps from the Dock to explore projects, achievements and future plans.">
+  <meta name="theme-color" content="#120d1f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FF6B57'/%3E%3Cstop offset='.5' stop-color='%239B7BFF'/%3E%3Cstop offset='1' stop-color='%232ED3B7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M32 4c2 16 12 26 28 28-16 2-26 12-28 28-2-16-12-26-28-28 16-2 26-12 28-28z' fill='url(%23g)'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts: Inter (UI), Instrument Serif (display), JetBrains Mono (code / specs) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- =========================================================
+       SVG SPRITE: app icons + small line icons, reused via <use>
+       ========================================================= -->
+  <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g-finder" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3EE6C8"/><stop offset="1" stop-color="#7B5CFF"/></linearGradient>
+      <linearGradient id="g-safari" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E3756"/><stop offset="1" stop-color="#121624"/></linearGradient>
+      <linearGradient id="g-notes" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFBF2"/><stop offset="1" stop-color="#F1E6CF"/></linearGradient>
+      <linearGradient id="g-notes-top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD36B"/><stop offset="1" stop-color="#FFAF3A"/></linearGradient>
+      <linearGradient id="g-photos" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#ECE7F6"/></linearGradient>
+      <linearGradient id="g-trophy" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9B6BFF"/><stop offset="1" stop-color="#E0489F"/></linearGradient>
+      <linearGradient id="g-gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset="1" stop-color="#FFB232"/></linearGradient>
+      <linearGradient id="g-settings" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6E6C7C"/><stop offset="1" stop-color="#2E2D36"/></linearGradient>
+      <linearGradient id="g-trash" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2EFF8" stop-opacity=".55"/><stop offset="1" stop-color="#B9B5C8" stop-opacity=".3"/></linearGradient>
+      <linearGradient id="g-night" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A1858"/><stop offset="1" stop-color="#120B2A"/></linearGradient>
+      <linearGradient id="g-about" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A1F44"/><stop offset="1" stop-color="#0F0B19"/></linearGradient>
+      <linearGradient id="g-folder" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86ECDA"/><stop offset="1" stop-color="#2EBBA3"/></linearGradient>
+      <linearGradient id="g-logo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6B57"/><stop offset=".5" stop-color="#9B7BFF"/><stop offset="1" stop-color="#2ED3B7"/></linearGradient>
+    </defs>
+
+    <!-- App icons (64 × 64 squircles) -->
+    <symbol id="i-logo" viewBox="0 0 64 64"><path d="M32 4c2 16 12 26 28 28-16 2-26 12-28 28-2-16-12-26-28-28 16-2 26-12 28-28z" fill="url(#g-logo)"/></symbol>
+    <symbol id="i-logo-mono" viewBox="0 0 64 64"><path d="M32 4c2 16 12 26 28 28-16 2-26 12-28 28-2-16-12-26-28-28 16-2 26-12 28-28z" fill="currentColor"/></symbol>
+
+    <symbol id="i-about" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="15" fill="url(#g-about)"/>
+      <path d="M32 12c1.6 11.4 8.6 18.4 20 20-11.4 1.6-18.4 8.6-20 20-1.6-11.4-8.6-18.4-20-20 11.4-1.6 18.4-8.6 20-20z" fill="url(#g-logo)"/>
+    </symbol>
+
+    <symbol id="i-finder" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="15" fill="url(#g-finder)"/>
+      <path d="M13 21a4 4 0 0 1 4-4h9.5l4 4H47a4 4 0 0 1 4 4v19a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4z" fill="#fff" fill-opacity=".95"/>
+      <path d="M13 27.5h38" stroke="#7B5CFF" stroke-opacity=".28" stroke-width="2"/>
+      <circle cx="26" cy="37" r="2" fill="#5B3FD6"/><circle cx="38" cy="37" r="2" fill="#5B3FD6"/>
+      <path d="M27 42.5c3 2 7 2 10 0" stroke="#5B3FD6" stroke-width="2" stroke-linecap="round" fill="none"/>
+    </symbol>
+
+    <symbol id="i-safari" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="15" fill="url(#g-safari)"/>
+      <circle cx="32" cy="32" r="21" fill="#F7F4FF"/>
+      <circle cx="32" cy="32" r="17.5" fill="none" stroke="#A3A8BC" stroke-width="1.4" stroke-dasharray="1 3.58"/>
+      <polygon points="44,20 34.6,34.6 29.4,29.4" fill="#FF6B57"/>
+      <polygon points="20,44 29.4,29.4 34.6,34.6" fill="#C6C9D6"/>
+      <circle cx="32" cy="32" r="2" fill="#fff"/>
+    </symbol>
+
+    <symbol id="i-notes" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="15" fill="url(#g-notes)"/>
+      <path d="M0 15A15 15 0 0 1 15 0h34a15 15 0 0 1 15 15v6H0z" fill="url(#g-notes-top)"/>
+      <path d="M0 21h64" stroke="#E39B2B" stroke-opacity=".4"/>
+      <path d="M12 32h40M12 40h40M12 48h26" stroke="#D8C9AC" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+
+    <symbol id="i-photos" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="15" fill="url(#g-photos)"/>
+      <g transform="translate(32 32)" style="mix-blend-mode:multiply">
+        <ellipse rx="6.5" ry="11.5" cy="-10" fill="#FFC24B" fill-opacity=".9"/>
+        <ellipse rx="6.5" ry="11.5" cy="-10" fill="#FF8A4C" fill-opacity=".9" transform="rotate(45)"/>
+        <ellipse rx="6.5" ry="11.5" cy="-10" fill="#FF5A5F" fill-opacity=".9" transform="rotate(90)"/>
+        <ellipse rx="6.5" ry="11.5" cy="-10" fill="#E2558F" fill-opacity=".9" transform="rotate(135)"/>
+        <ellipse rx="6.5" ry="11.5" cy="-10" fill="#9B7BFF" fill-opacity=".9" transform="rotate(180)"/>
+        <ellipse rx="6.5" ry="11.5" cy="-10" fill="#5F7CF0" fill-opacity=".9" transform="rotate(225)"/>
+        <ellipse rx="6.5" ry="11.5" cy="-10" fill="#2ED3B7" fill-opacity=".9" transform="rotate(270)"/>
+        <ellipse rx="6.5" ry="11.5" cy="-10" fill="#9BE15D" fill-opacity=".9" transform="rotate(315)"/>
+      </g>
+    </symbol>
+
+    <symbol id="i-trophy" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="15" fill="url(#g-trophy)"/>
+      <path d="M22.5 19h-5a5.5 5.5 0 0 0 5.5 9.5M41.5 19h5a5.5 5.5 0 0 1-5.5 9.5" fill="none" stroke="#FFD47A" stroke-width="3" stroke-linecap="round"/>
+      <path d="M21 14h22v12a11 11 0 0 1-22 0z" fill="url(#g-gold)"/>
+      <rect x="29.5" y="36" width="5" height="7" fill="#FFB232"/>
+      <rect x="22" y="43" width="20" height="7" rx="2.5" fill="url(#g-gold)"/>
+      <path d="M32 18.5l1.6 3.3 3.6.5-2.6 2.5.6 3.6-3.2-1.7-3.2 1.7.6-3.6-2.6-2.5 3.6-.5z" fill="#fff" fill-opacity=".9"/>
+    </symbol>
+
+    <symbol id="i-settings" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="15" fill="url(#g-settings)"/>
+      <circle cx="32" cy="32" r="16" fill="none" stroke="#D9D8E2" stroke-width="7" stroke-dasharray="4.4 3.98"/>
+      <circle cx="32" cy="32" r="13" fill="#CFCED9"/>
+      <circle cx="32" cy="32" r="9" fill="none" stroke="#9E9CAD" stroke-width="1.5"/>
+      <circle cx="32" cy="32" r="5" fill="#3A3944"/>
+    </symbol>
+
+    <symbol id="i-trash-full" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="15" fill="url(#g-trash)"/>
+      <circle cx="26" cy="19" r="5" fill="#FFE3D6"/><circle cx="35" cy="17" r="5.5" fill="#FFF4D6"/><circle cx="40" cy="21" r="4" fill="#E6DEFF"/>
+      <path d="M19.5 22h25l-2.4 26.2a3 3 0 0 1-3 2.8H24.9a3 3 0 0 1-3-2.8z" fill="#fff" fill-opacity=".9"/>
+      <path d="M27 28v17M32 28v17M37 28v17" stroke="#8F8C9C" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-trash-empty" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="15" fill="url(#g-trash)"/>
+      <rect x="17" y="17" width="30" height="4" rx="2" fill="#fff"/>
+      <path d="M27.5 14.5h9" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+      <path d="M19.5 22h25l-2.4 26.2a3 3 0 0 1-3 2.8H24.9a3 3 0 0 1-3-2.8z" fill="#fff" fill-opacity=".9"/>
+      <path d="M27 28v17M32 28v17M37 28v17" stroke="#8F8C9C" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- File icons -->
+    <symbol id="i-game" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="15" fill="url(#g-night)"/>
+      <g fill="#FFC24B">
+        <path transform="translate(20 17)" d="M0-5l1.5 3.1 3.4.5-2.5 2.4.6 3.4L0 2.8-3 4.4l.6-3.4-2.5-2.4 3.4-.5z"/>
+        <path transform="translate(42 25) scale(.8)" d="M0-5l1.5 3.1 3.4.5-2.5 2.4.6 3.4L0 2.8-3 4.4l.6-3.4-2.5-2.4 3.4-.5z"/>
+        <path transform="translate(30 36) scale(1.15)" d="M0-5l1.5 3.1 3.4.5-2.5 2.4.6 3.4L0 2.8-3 4.4l.6-3.4-2.5-2.4 3.4-.5z"/>
+      </g>
+      <circle cx="47" cy="12" r="1.2" fill="#fff" fill-opacity=".7"/><circle cx="12" cy="30" r="1" fill="#fff" fill-opacity=".6"/>
+      <rect x="20" y="48" width="24" height="5" rx="2.5" fill="#2ED3B7"/>
+    </symbol>
+    <symbol id="i-folder" viewBox="0 0 64 64">
+      <path d="M6 16a5 5 0 0 1 5-5h14l5 5h23a5 5 0 0 1 5 5v4H6z" fill="#23A58F"/>
+      <path d="M6 23a4 4 0 0 1 4-4h44a4 4 0 0 1 4 4v25a5 5 0 0 1-5 5H11a5 5 0 0 1-5-5z" fill="url(#g-folder)"/>
+    </symbol>
+    <symbol id="i-txt" viewBox="0 0 64 64">
+      <path d="M15 5h23l13 13v37a4 4 0 0 1-4 4H15a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4z" fill="#FBF9FF"/>
+      <path d="M38 5v9a4 4 0 0 0 4 4h9z" fill="#D8D2E8"/>
+      <path d="M18 28h26M18 34h26M18 40h26M18 46h16" stroke="#B4AECB" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-py" viewBox="0 0 64 64">
+      <path d="M15 5h23l13 13v37a4 4 0 0 1-4 4H15a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4z" fill="#FBF9FF"/>
+      <path d="M38 5v9a4 4 0 0 0 4 4h9z" fill="#D8D2E8"/>
+      <rect x="11" y="37" width="40" height="13" fill="#2ED3B7"/>
+      <text x="31" y="46.8" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="9" fill="#06332B">.PY</text>
+    </symbol>
+    <symbol id="i-md" viewBox="0 0 64 64">
+      <path d="M15 5h23l13 13v37a4 4 0 0 1-4 4H15a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4z" fill="#FBF9FF"/>
+      <path d="M38 5v9a4 4 0 0 0 4 4h9z" fill="#D8D2E8"/>
+      <rect x="11" y="37" width="40" height="13" fill="#FFC24B"/>
+      <text x="31" y="46.8" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="9" fill="#3D2700">×5 MD</text>
+    </symbol>
+
+    <!-- Line icons (24 × 24, use currentColor) -->
+    <symbol id="ic-star" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z"/></g></symbol>
+    <symbol id="ic-map" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4zM9 4v14M15 6v14"/></g></symbol>
+    <symbol id="ic-branch" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="7" r="2"/><path d="M6 7v10M18 9v1a5 5 0 0 1-5 5H8"/></g></symbol>
+    <symbol id="ic-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></g></symbol>
+    <symbol id="ic-window" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="3"/><path d="M3 9h18M6.5 6.8h.01M9 6.8h.01"/></g></symbol>
+    <symbol id="ic-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5.5A2.5 2.5 0 0 1 6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5 2.5 2.5 0 0 1 6.5 16H20"/></g></symbol>
+    <symbol id="ic-rocket" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2M9 15l-3-3c1.5-4.5 5-8.5 13-9-.5 8-4.5 11.5-9 13zM14.5 9.5h.01"/></g></symbol>
+    <symbol id="ic-cap" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9 12 4.5 21.5 9 12 13.5zM6.5 11v5c0 1.5 2.5 3 5.5 3s5.5-1.5 5.5-3v-5M21.5 9v5"/></g></symbol>
+    <symbol id="ic-commit" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.5"/><path d="M3 12h5.5M15.5 12H21"/></g></symbol>
+    <symbol id="ic-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></g></symbol>
+    <symbol id="ic-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.4-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.6-7.5 10-7.5 10z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></g></symbol>
+    <symbol id="ic-grid" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></g></symbol>
+    <symbol id="ic-list" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></g></symbol>
+    <symbol id="ic-chev-l" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-chev-r" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-reload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4.5v4.5H15"/></g></symbol>
+    <symbol id="ic-share" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></g></symbol>
+    <symbol id="ic-wifi" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.6 16a5 5 0 0 1 6.8 0"/></g><circle cx="12" cy="19.2" r="1.3" fill="currentColor"/></symbol>
+    <symbol id="ic-battery" viewBox="0 0 24 24"><rect x="2" y="7" width="17.5" height="10" rx="2.8" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="4" y="9" width="11" height="6" rx="1.2" fill="currentColor"/><path d="M21.5 10.5v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="ic-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8.5 7H17v8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-folder" viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="ic-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.5 5.4 3.5 8.5s-1 5.9-3.5 8.5c-2.5-2.6-3.5-5.4-3.5-8.5s1-5.9 3.5-8.5z"/></g></symbol>
+    <symbol id="ic-terminal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="3"/><path d="M7 10l3 2.5L7 15M12.5 15H17"/></g></symbol>
+    <symbol id="ic-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3.5H7.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8zM14 3.5V8h4.5M9 13h6M9 16.5h4"/></g></symbol>
+    <symbol id="ic-appearance" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4.5a7.5 7.5 0 0 1 0 15z" fill="currentColor"/></symbol>
+    <symbol id="ic-image" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><circle cx="9" cy="10" r="1.5"/><path d="M20.5 16l-5-5-8.5 8"/></g></symbol>
+    <symbol id="ic-dock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="4" width="17" height="16" rx="3"/><path d="M7.5 16h9"/></g></symbol>
+    <symbol id="ic-close" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="ic-flag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></g></symbol>
+  </svg>
+
+  <!-- =========================================================
+       BOOT / LOGIN SCREEN (shown once per session)
+       ========================================================= -->
+  <div class="boot" id="boot" aria-hidden="true">
+    <div class="boot-inner">
+      <div class="avatar avatar-xl">
+        <img class="avatar-img" src="photo.png" alt="">
+        <span class="avatar-initials">KA</span>
+      </div>
+      <p class="boot-name">Khuzaima Amir</p>
+      <div class="boot-bar"><span></span></div>
+      <p class="boot-hint">Starting Portfolio OS · click to skip</p>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       WALLPAPER
+       ========================================================= -->
+  <div class="wallpaper" aria-hidden="true">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <span class="blob b3"></span>
+    <span class="blob b4"></span>
+    <span class="grain"></span>
+  </div>
+
+  <!-- =========================================================
+       MENU BAR: a system status strip (clock, active app).
+       Navigation happens through the Dock, not here.
+       ========================================================= -->
+  <div class="menubar" id="menubar">
+    <div class="mb-left">
+      <button class="mb-btn mb-logo" id="system-btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="system-menu" title="System menu">
+        <svg aria-hidden="true"><use href="#i-logo-mono"/></svg>
+        <span class="sr-only">System menu</span>
+      </button>
+      <span class="mb-app" id="mb-app" aria-live="polite">Finder</span>
+      <span class="mb-hint">Khuzaima's Desktop</span>
+    </div>
+    <div class="mb-right">
+      <svg class="mb-ico" aria-hidden="true"><use href="#ic-battery"/></svg>
+      <svg class="mb-ico" aria-hidden="true"><use href="#ic-wifi"/></svg>
+      <time class="mb-clock" id="mb-clock"></time>
+    </div>
+  </div>
+
+  <div class="menu" id="system-menu" role="menu" aria-label="System" hidden>
+    <button type="button" role="menuitem" data-open="welcome">About This Portfolio</button>
+    <button type="button" role="menuitem" data-open="settings">System Settings…</button>
+    <hr>
+    <button type="button" role="menuitem" data-cmd="minimize-all">Minimise All</button>
+    <button type="button" role="menuitem" data-cmd="close-all">Close All Windows</button>
+    <hr>
+    <button type="button" role="menuitem" data-cmd="restart">Restart…</button>
+  </div>
+
+  <!-- =========================================================
+       DESKTOP: widgets (left), icons (right) and every window
+       ========================================================= -->
+  <main class="desktop" id="desktop">
+    <h1 class="sr-only">Khuzaima Amir: portfolio desktop</h1>
+
+    <!-- Desktop widgets -->
+    <div class="widgets" aria-label="Desktop widgets">
+      <div class="widget w-clock">
+        <p class="w-greet" id="w-greet">Hello</p>
+        <p class="w-time" id="w-time">--:--</p>
+        <p class="w-date" id="w-date"></p>
+      </div>
+
+      <button class="widget w-trophy" type="button" data-open="achievements">
+        <span class="ring" id="w-ring" style="--p:0">
+          <svg viewBox="0 0 36 36" aria-hidden="true"><circle class="ring-track" cx="18" cy="18" r="15.5"/><circle class="ring-fill" cx="18" cy="18" r="15.5" pathLength="100"/></svg>
+          <span class="ring-num" id="w-ring-num">0</span>
+        </span>
+        <span class="w-text">
+          <span class="w-label">Achievements</span>
+          <strong id="w-trophy-sum">Unlocked</strong>
+          <span class="w-sub">Latest: an OS in a browser</span>
+        </span>
+      </button>
+
+      <button class="widget w-next" type="button" data-open="notes">
+        <span class="w-label"><svg aria-hidden="true"><use href="#ic-flag"/></svg> Up next</span>
+        <strong id="w-next-title">Starfall 2.0</strong>
+        <span class="w-progress"><span id="w-next-bar"></span></span>
+        <span class="w-sub" id="w-next-count">0 of 4 build goals done</span>
+      </button>
+    </div>
+
+    <!-- Desktop icons -->
+    <div class="desk-icons" aria-label="Desktop items">
+      <!-- Homework 6/7 link: Starfall, hosted on GitHub Pages next to this folder -->
+      <a class="desk-icon" href="https://xkhuzaima.github.io/Heuser/CS_CRP/Homework_6/" target="_blank" rel="noopener">
+        <svg aria-hidden="true"><use href="#i-game"/></svg>
+        <span>Starfall<br><small>Homework 6/7</small></span>
+      </a>
+      <button class="desk-icon" type="button" data-open="welcome">
+        <svg aria-hidden="true"><use href="#i-txt"/></svg>
+        <span>Read Me.txt</span>
+      </button>
+      <button class="desk-icon" type="button" data-open="photos">
+        <span class="desk-thumb avatar">
+          <img class="avatar-img" src="photo.png" alt="">
+          <span class="avatar-initials">KA</span>
+        </span>
+        <span>me.png</span>
+      </button>
+      <button class="desk-icon" type="button" data-open="finder">
+        <svg aria-hidden="true"><use href="#i-folder"/></svg>
+        <span>Projects</span>
+      </button>
+    </div>
+
+    <!-- ===================== WINDOW: About This Portfolio ===================== -->
+    <section class="window win-welcome" id="win-welcome" data-app="welcome" role="dialog" aria-labelledby="t-welcome" tabindex="-1" hidden>
+      <div class="titlebar">
+        <div class="traffic">
+          <button class="tl close" type="button" data-action="close" aria-label="Close"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5"/></svg></button>
+          <button class="tl min" type="button" data-action="minimize" aria-label="Minimise"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.8 6h6.4"/></svg></button>
+          <button class="tl max" type="button" data-action="maximize" aria-label="Zoom"><svg viewBox="0 0 12 12" aria-hidden="true"><path class="fill" d="M3.2 8.8V4.4l4.4 4.4zM8.8 3.2v4.4L4.4 3.2z"/></svg></button>
+        </div>
+        <h2 class="win-title" id="t-welcome">About This Portfolio</h2>
+      </div>
+      <div class="win-body about">
+        <div class="about-hero">
+          <svg class="about-logo" aria-hidden="true"><use href="#i-about"/></svg>
+          <p class="about-name">Portfolio <em>OS</em></p>
+          <p class="about-version">Version 8.0 · Homework 8 Edition</p>
+        </div>
+
+        <!-- Concept explanation -->
+        <p class="about-concept">
+          This portfolio has no header or menu to scroll through. It's a small desktop that runs in your browser, and every section lives in its own app.
+          Open apps from the Dock, then drag, stack, zoom or minimise their windows however you like.
+          I built it with plain HTML, CSS and JavaScript so it feels like software you explore, not a page you read top to bottom.
+        </p>
+
+        <dl class="specs">
+          <div><dt>Owner</dt><dd>Khuzaima Amir</dd></div>
+          <div><dt>Processor</dt><dd>Curiosity Engine (caffeinated)</dd></div>
+          <div><dt>Memory</dt><dd>A-Level Computer Science, Maths &amp; Physics</dd></div>
+          <div><dt>Graphics</dt><dd>CSS backdrop-filter, 40&nbsp;px blur</dd></div>
+          <div><dt>Built with</dt><dd>HTML · CSS · vanilla JavaScript</dd></div>
+          <div><dt>Uptime</dt><dd id="uptime">just now</dd></div>
+        </dl>
+
+        <div class="about-actions">
+          <button class="btn primary" type="button" data-open="photos">Meet the owner</button>
+          <button class="btn" type="button" data-open="finder">Browse projects</button>
+        </div>
+        <p class="about-tip">Drag a title bar to move · double-click it to zoom · right-click the desktop for more</p>
+      </div>
+      <span class="grip" aria-hidden="true"></span>
+    </section>
+
+    <!-- ===================== WINDOW: Photos (profile) ===================== -->
+    <section class="window win-photos" id="win-photos" data-app="photos" role="dialog" aria-labelledby="t-photos" tabindex="-1" hidden>
+      <div class="titlebar">
+        <div class="traffic">
+          <button class="tl close" type="button" data-action="close" aria-label="Close"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5"/></svg></button>
+          <button class="tl min" type="button" data-action="minimize" aria-label="Minimise"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.8 6h6.4"/></svg></button>
+          <button class="tl max" type="button" data-action="maximize" aria-label="Zoom"><svg viewBox="0 0 12 12" aria-hidden="true"><path class="fill" d="M3.2 8.8V4.4l4.4 4.4zM8.8 3.2v4.4L4.4 3.2z"/></svg></button>
+        </div>
+        <h2 class="win-title" id="t-photos">Photos · me.png</h2>
+      </div>
+      <div class="win-body photos">
+        <div class="photo-stage" id="photo-stage">
+          <figure class="photo-frame avatar" id="photo-frame">
+            <img class="avatar-img" src="photo.png" alt="Portrait of Khuzaima Amir">
+            <span class="avatar-initials" aria-hidden="true">KA</span>
+            <span class="photo-shine" aria-hidden="true"></span>
+          </figure>
+          <div class="photo-meta">
+            <button class="heart-btn" id="heart-btn" type="button" aria-pressed="false" aria-label="Favourite this photo">
+              <svg aria-hidden="true"><use href="#ic-heart"/></svg>
+            </button>
+            <span>me.png · Portrait</span>
+          </div>
+        </div>
+
+        <aside class="photo-info">
+          <p class="eyebrow">Info</p>
+          <h3 class="display">Khuzaima Amir</h3>
+          <p class="role">A-Level student · aspiring software engineer</p>
+          <p class="bio">
+            Hi, I'm Khuzaima. I like turning ideas into things you can click on.
+            I started with Python scripts that drew waves and ran quizzes in the terminal, then moved to the browser and built <strong>Starfall</strong>, a full arcade catch game.
+            The part I enjoy most is the problem-solving: breaking a big idea into small, testable steps until it works.
+          </p>
+          <dl class="info-rows">
+            <div><dt>Studying</dt><dd>Computer Science, Maths, Physics</dd></div>
+            <div><dt>Writes</dt><dd>JavaScript, Python, HTML &amp; CSS</dd></div>
+            <div><dt>Building</dt><dd>This desktop, one window at a time</dd></div>
+          </dl>
+          <ul class="chips" aria-label="Interests">
+            <li>Game development</li><li>Web design</li><li>Python</li><li>Problem solving</li>
+          </ul>
+        </aside>
+      </div>
+      <span class="grip" aria-hidden="true"></span>
+    </section>
+
+    <!-- ===================== WINDOW: Finder (projects) ===================== -->
+    <section class="window win-finder" id="win-finder" data-app="finder" role="dialog" aria-labelledby="t-finder" tabindex="-1" hidden>
+      <div class="titlebar">
+        <div class="traffic">
+          <button class="tl close" type="button" data-action="close" aria-label="Close"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5"/></svg></button>
+          <button class="tl min" type="button" data-action="minimize" aria-label="Minimise"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.8 6h6.4"/></svg></button>
+          <button class="tl max" type="button" data-action="maximize" aria-label="Zoom"><svg viewBox="0 0 12 12" aria-hidden="true"><path class="fill" d="M3.2 8.8V4.4l4.4 4.4zM8.8 3.2v4.4L4.4 3.2z"/></svg></button>
+        </div>
+        <h2 class="win-title" id="t-finder">Finder · Projects</h2>
+      </div>
+      <div class="win-body finder">
+        <aside class="sidebar" aria-label="Finder sidebar">
+          <p class="side-head">Favourites</p>
+          <button class="side-item active" type="button" data-filter="all"><svg aria-hidden="true"><use href="#ic-folder"/></svg>All Projects</button>
+          <button class="side-item" type="button" data-filter="web"><svg aria-hidden="true"><use href="#ic-globe"/></svg>Web</button>
+          <button class="side-item" type="button" data-filter="python"><svg aria-hidden="true"><use href="#ic-terminal"/></svg>Python</button>
+          <button class="side-item" type="button" data-filter="docs"><svg aria-hidden="true"><use href="#ic-doc"/></svg>Plans &amp; Docs</button>
+          <p class="side-head">Tags</p>
+          <button class="side-item" type="button" data-filter="games"><span class="tag-dot" style="--c:var(--coral)"></span>Games</button>
+          <button class="side-item" type="button" data-filter="featured"><span class="tag-dot" style="--c:var(--violet)"></span>Featured</button>
+          <button class="side-item" type="button" data-filter="homework"><span class="tag-dot" style="--c:var(--teal)"></span>Homework</button>
+        </aside>
+
+        <div class="finder-main">
+          <div class="finder-toolbar">
+            <span class="nav-arrows" aria-hidden="true"><svg><use href="#ic-chev-l"/></svg><svg><use href="#ic-chev-r"/></svg></span>
+            <p class="finder-path" id="finder-path">All Projects</p>
+            <div class="seg seg-icons" role="group" aria-label="View as">
+              <button type="button" data-view="grid" aria-pressed="true" aria-label="Icons"><svg aria-hidden="true"><use href="#ic-grid"/></svg></button>
+              <button type="button" data-view="list" aria-pressed="false" aria-label="List"><svg aria-hidden="true"><use href="#ic-list"/></svg></button>
+            </div>
+            <label class="search">
+              <svg aria-hidden="true"><use href="#ic-search"/></svg>
+              <input type="search" id="finder-search" placeholder="Search" aria-label="Search projects" autocomplete="off">
+            </label>
+          </div>
+
+          <div class="finder-split">
+            <ul class="files" id="files" data-view="grid">
+              <li><button class="file" type="button" data-file="starfall" data-tags="web games featured homework">
+                <svg aria-hidden="true"><use href="#i-game"/></svg>
+                <span class="file-name">Starfall</span><span class="file-kind">Web game</span><span class="file-date">Nov 2026</span>
+              </button></li>
+              <li><button class="file" type="button" data-file="portfolio" data-tags="web featured homework">
+                <svg aria-hidden="true"><use href="#i-about"/></svg>
+                <span class="file-name">Portfolio OS</span><span class="file-kind">Website</span><span class="file-date">Nov 2026</span>
+              </button></li>
+              <li><button class="file" type="button" data-file="plans" data-tags="docs homework">
+                <svg aria-hidden="true"><use href="#i-md"/></svg>
+                <span class="file-name">Starfall build plans</span><span class="file-kind">Markdown ×5</span><span class="file-date">Nov 2026</span>
+              </button></li>
+              <li><button class="file" type="button" data-file="stem" data-tags="python games homework">
+                <svg aria-hidden="true"><use href="#i-py"/></svg>
+                <span class="file-name">women_in_stem.py</span><span class="file-kind">Python game</span><span class="file-date">Oct 2026</span>
+              </button></li>
+              <li><button class="file" type="button" data-file="wave" data-tags="python homework">
+                <svg aria-hidden="true"><use href="#i-py"/></svg>
+                <span class="file-name">animated_wave.py</span><span class="file-kind">Python script</span><span class="file-date">Oct 2026</span>
+              </button></li>
+            </ul>
+            <p class="finder-empty" id="finder-empty" hidden>No items match your search.</p>
+
+            <div class="preview-pane" id="preview-pane" aria-live="polite">
+              <div class="preview" data-for="none">
+                <svg class="pv-icon faint" aria-hidden="true"><use href="#i-folder"/></svg>
+                <p class="pv-hint">Select a project to see what it is.</p>
+              </div>
+              <div class="preview" data-for="starfall" hidden>
+                <svg class="pv-icon" aria-hidden="true"><use href="#i-game"/></svg>
+                <h3>Starfall</h3>
+                <p>An arcade catch game drawn on an HTML canvas. Catch falling stars, dodge the red ones and build streaks for up to a ×4 multiplier as the difficulty ramps up.</p>
+                <dl class="pv-meta">
+                  <div><dt>Code</dt><dd>1,439 lines of JS</dd></div>
+                  <div><dt>Features</dt><dd>Sound, pause, saved high scores</dd></div>
+                  <div><dt>Course</dt><dd>Homework 6 &amp; 7</dd></div>
+                </dl>
+                <a class="btn primary" href="https://xkhuzaima.github.io/Heuser/CS_CRP/Homework_6/" target="_blank" rel="noopener">Play Starfall <svg aria-hidden="true"><use href="#ic-arrow"/></svg></a>
+              </div>
+              <div class="preview" data-for="portfolio" hidden>
+                <svg class="pv-icon" aria-hidden="true"><use href="#i-about"/></svg>
+                <h3>Portfolio OS</h3>
+                <p>The desktop you're using right now: draggable glass windows, a magnifying Dock and settings that remember your choices. No frameworks.</p>
+                <dl class="pv-meta">
+                  <div><dt>Stack</dt><dd>HTML, CSS, JavaScript</dd></div>
+                  <div><dt>Course</dt><dd>Homework 8</dd></div>
+                </dl>
+                <button class="btn" type="button" data-open="welcome">About this site</button>
+              </div>
+              <div class="preview" data-for="plans" hidden>
+                <svg class="pv-icon" aria-hidden="true"><use href="#i-md"/></svg>
+                <h3>Starfall build plans</h3>
+                <p>Five staged plans, about 2,300 lines in total, that grew Starfall from plain rectangles into a finished game:</p>
+                <ol class="pv-steps">
+                  <li>Core logic</li><li>Visual vibe</li><li>Sensory feedback</li><li>State &amp; storage</li><li>Debugging &amp; polish</li>
+                </ol>
+              </div>
+              <div class="preview" data-for="stem" hidden>
+                <svg class="pv-icon" aria-hidden="true"><use href="#i-py"/></svg>
+                <h3>women_in_stem.py</h3>
+                <p>A clue-by-clue guessing game about computing pioneers such as Ada Lovelace, Grace Hopper and Katherine Johnson. The fewer clues you need, the better.</p>
+                <dl class="pv-meta"><div><dt>Course</dt><dd>Homework 4</dd></div></dl>
+              </div>
+              <div class="preview" data-for="wave" hidden>
+                <svg class="pv-icon" aria-hidden="true"><use href="#i-py"/></svg>
+                <h3>animated_wave.py</h3>
+                <p>Terminal art: a sine wave drawn line by line with <code>O</code> and <code>*</code> characters using <code>math.sin()</code>.</p>
+                <pre class="wave-art" id="wave-art" aria-hidden="true"></pre>
+                <dl class="pv-meta"><div><dt>Course</dt><dd>Homework 4</dd></div></dl>
+              </div>
+            </div>
+          </div>
+
+          <p class="finder-status" id="finder-status">5 items</p>
+        </div>
+      </div>
+      <span class="grip" aria-hidden="true"></span>
+    </section>
+
+    <!-- ===================== WINDOW: Safari (links) ===================== -->
+    <section class="window win-safari" id="win-safari" data-app="safari" role="dialog" aria-labelledby="t-safari" tabindex="-1" hidden>
+      <div class="titlebar unified">
+        <div class="traffic">
+          <button class="tl close" type="button" data-action="close" aria-label="Close"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5"/></svg></button>
+          <button class="tl min" type="button" data-action="minimize" aria-label="Minimise"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.8 6h6.4"/></svg></button>
+          <button class="tl max" type="button" data-action="maximize" aria-label="Zoom"><svg viewBox="0 0 12 12" aria-hidden="true"><path class="fill" d="M3.2 8.8V4.4l4.4 4.4zM8.8 3.2v4.4L4.4 3.2z"/></svg></button>
+        </div>
+        <h2 class="sr-only" id="t-safari">Safari: Start Page</h2>
+        <span class="nav-arrows" aria-hidden="true"><svg><use href="#ic-chev-l"/></svg><svg><use href="#ic-chev-r"/></svg></span>
+        <div class="address">
+          <svg aria-hidden="true"><use href="#ic-lock"/></svg>
+          <span id="address-text">portfolio.local/start</span>
+          <button class="icon-btn" id="reload-btn" type="button" aria-label="Reload start page"><svg aria-hidden="true"><use href="#ic-reload"/></svg></button>
+        </div>
+        <svg class="tb-ico" aria-hidden="true"><use href="#ic-share"/></svg>
+      </div>
+      <div class="win-body safari">
+        <div class="start-page" id="start-page">
+          <p class="sp-head">Favourites</p>
+
+          <!-- Homework 6/7 link (featured) -->
+          <a class="feature-card" href="https://xkhuzaima.github.io/Heuser/CS_CRP/Homework_6/" target="_blank" rel="noopener">
+            <span class="feature-art" aria-hidden="true">
+              <span class="fstar s1"></span><span class="fstar s2"></span><span class="fstar s3"></span><span class="fstar s4"></span>
+              <span class="fcatcher"></span>
+            </span>
+            <span class="feature-text">
+              <span class="eyebrow">Homework 6 &amp; 7 · hosted page</span>
+              <span class="feature-title">Starfall</span>
+              <span class="feature-desc">My canvas catch game. Catch the stars, dodge the red ones and keep the streak going.</span>
+              <span class="link-pill">Play at xkhuzaima.github.io <svg aria-hidden="true"><use href="#ic-arrow"/></svg></span>
+            </span>
+          </a>
+
+          <div class="fav-grid">
+            <a class="fav" href="https://github.com/xkhuzaima" target="_blank" rel="noopener">
+              <span class="fav-icon" style="--c:var(--violet)"><svg aria-hidden="true"><use href="#ic-code"/></svg></span><span>GitHub</span>
+            </a>
+            <a class="fav" href="https://github.com/xkhuzaima/Heuser" target="_blank" rel="noopener">
+              <span class="fav-icon" style="--c:var(--teal)"><svg aria-hidden="true"><use href="#ic-branch"/></svg></span><span>Course repo</span>
+            </a>
+            <button class="fav" type="button" data-open="finder">
+              <span class="fav-icon" style="--c:var(--coral)"><svg aria-hidden="true"><use href="#ic-folder"/></svg></span><span>Projects</span>
+            </button>
+            <button class="fav" type="button" data-open="notes">
+              <span class="fav-icon" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#ic-rocket"/></svg></span><span>Roadmap</span>
+            </button>
+          </div>
+
+          <p class="sp-head">Privacy Report</p>
+          <div class="report">
+            <div><strong data-count="0">0</strong><span>trackers or cookies</span></div>
+            <div><strong data-count="0">0</strong><span>frameworks used</span></div>
+            <div><strong data-count="1439">1,439</strong><span>lines of JS in Starfall</span></div>
+          </div>
+        </div>
+      </div>
+      <span class="grip" aria-hidden="true"></span>
+    </section>
+
+    <!-- ===================== WINDOW: Notes (future aspirations) ===================== -->
+    <section class="window win-notes" id="win-notes" data-app="notes" role="dialog" aria-labelledby="t-notes" tabindex="-1" hidden>
+      <div class="titlebar">
+        <div class="traffic">
+          <button class="tl close" type="button" data-action="close" aria-label="Close"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5"/></svg></button>
+          <button class="tl min" type="button" data-action="minimize" aria-label="Minimise"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.8 6h6.4"/></svg></button>
+          <button class="tl max" type="button" data-action="maximize" aria-label="Zoom"><svg viewBox="0 0 12 12" aria-hidden="true"><path class="fill" d="M3.2 8.8V4.4l4.4 4.4zM8.8 3.2v4.4L4.4 3.2z"/></svg></button>
+        </div>
+        <h2 class="win-title" id="t-notes">Notes · Future</h2>
+      </div>
+      <div class="win-body notes">
+        <div class="notes-list" role="tablist" aria-label="Notes" aria-orientation="vertical">
+          <p class="side-head">Future · 3 notes</p>
+          <button class="note-item active" type="button" role="tab" id="tab-build" aria-selected="true" aria-controls="note-build" data-note="build">
+            <strong>Things I want to build</strong>
+            <span><b>Pinned</b> Starfall 2.0, a revision planner…</span>
+          </button>
+          <button class="note-item" type="button" role="tab" id="tab-path" aria-selected="false" aria-controls="note-path" data-note="path" tabindex="-1">
+            <strong>Where I'm heading</strong>
+            <span><b>Plan</b> A-Levels, then university…</span>
+          </button>
+          <button class="note-item" type="button" role="tab" id="tab-learn" aria-selected="false" aria-controls="note-learn" data-note="learn" tabindex="-1">
+            <strong>Skills to learn next</strong>
+            <span><b>List</b> TypeScript, React, SQL…</span>
+          </button>
+        </div>
+
+        <article class="note-page" id="note-build" role="tabpanel" aria-labelledby="tab-build">
+          <p class="note-date">Pinned · tick them off as they ship</p>
+          <h3>Things I want to build</h3>
+          <p>Ideas I keep coming back to. Each one is a step up from the last thing I made.</p>
+          <ul class="checklist" data-list="build">
+            <li><label><input type="checkbox" data-key="build-1"><span><b>Starfall 2.0:</b> an online leaderboard, power-ups and proper touch controls.</span></label></li>
+            <li><label><input type="checkbox" data-key="build-2"><span><b>A revision planner</b> that turns an exam timetable into a realistic daily schedule.</span></label></li>
+            <li><label><input type="checkbox" data-key="build-3"><span><b>A physics playground</b> where you can drag projectiles, pendulums and orbits around and watch the maths.</span></label></li>
+            <li><label><input type="checkbox" data-key="build-4"><span><b>A pixel-art story game</b> in MakeCode Arcade with choices that change the ending.</span></label></li>
+          </ul>
+        </article>
+
+        <article class="note-page" id="note-path" role="tabpanel" aria-labelledby="tab-path" hidden>
+          <p class="note-date">The long view</p>
+          <h3>Where I'm heading</h3>
+          <ol class="timeline">
+            <li style="--c:var(--coral)"><span class="tl-when">Now</span><p>Finish A-Level Computer Science, Maths and Physics with grades that keep every door open, and keep shipping small projects alongside.</p></li>
+            <li style="--c:var(--violet)"><span class="tl-when">Next</span><p>Study Computer Science at university, leaning into software engineering and game development.</p></li>
+            <li style="--c:var(--teal)"><span class="tl-when">Later</span><p>Build products people actually use: tools that make learning less stressful, and games that are fun to replay.</p></li>
+          </ol>
+        </article>
+
+        <article class="note-page" id="note-learn" role="tabpanel" aria-labelledby="tab-learn" hidden>
+          <p class="note-date">Learning queue</p>
+          <h3>Skills to learn next</h3>
+          <ul class="checklist" data-list="learn">
+            <li><label><input type="checkbox" data-key="learn-1"><span><b>TypeScript</b> to catch bugs before the browser does</span></label></li>
+            <li><label><input type="checkbox" data-key="learn-2"><span><b>React</b> for building bigger interfaces</span></label></li>
+            <li><label><input type="checkbox" data-key="learn-3"><span><b>Node.js and SQL</b> so Starfall can have a real backend</span></label></li>
+            <li><label><input type="checkbox" data-key="learn-4"><span><b>Git branching and pull requests</b></span></label></li>
+            <li><label><input type="checkbox" data-key="learn-5"><span><b>Data structures and algorithms</b>, beyond the A-Level syllabus</span></label></li>
+          </ul>
+        </article>
+      </div>
+      <span class="grip" aria-hidden="true"></span>
+    </section>
+
+    <!-- ===================== WINDOW: Achievements ===================== -->
+    <section class="window win-achievements" id="win-achievements" data-app="achievements" role="dialog" aria-labelledby="t-achievements" tabindex="-1" hidden>
+      <div class="titlebar">
+        <div class="traffic">
+          <button class="tl close" type="button" data-action="close" aria-label="Close"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5"/></svg></button>
+          <button class="tl min" type="button" data-action="minimize" aria-label="Minimise"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.8 6h6.4"/></svg></button>
+          <button class="tl max" type="button" data-action="maximize" aria-label="Zoom"><svg viewBox="0 0 12 12" aria-hidden="true"><path class="fill" d="M3.2 8.8V4.4l4.4 4.4zM8.8 3.2v4.4L4.4 3.2z"/></svg></button>
+        </div>
+        <h2 class="win-title" id="t-achievements">Achievements</h2>
+      </div>
+      <div class="win-body trophies">
+        <div class="trophy-head">
+          <span class="ring ring-lg" id="t-ring" style="--p:0">
+            <svg viewBox="0 0 36 36" aria-hidden="true"><circle class="ring-track" cx="18" cy="18" r="15.5"/><circle class="ring-fill" cx="18" cy="18" r="15.5" pathLength="100"/></svg>
+            <span class="ring-num" id="t-ring-num">0</span>
+          </span>
+          <div class="trophy-intro">
+            <h3 class="display">Achievements</h3>
+            <p id="trophy-summary">Click a badge to flip it.</p>
+          </div>
+          <div class="seg" role="group" aria-label="Filter achievements">
+            <button type="button" data-tfilter="all" aria-pressed="true">All</button>
+            <button type="button" data-tfilter="unlocked" aria-pressed="false">Unlocked</button>
+            <button type="button" data-tfilter="locked" aria-pressed="false">Locked</button>
+          </div>
+        </div>
+
+        <ul class="badges" id="badges">
+          <li class="badge" data-state="unlocked" style="--c:var(--coral)">
+            <button class="badge-card" type="button" aria-pressed="false">
+              <span class="face front"><span class="medal"><svg aria-hidden="true"><use href="#ic-star"/></svg></span><strong>Shipped a full game</strong><small>Nov 2026</small></span>
+              <span class="face back"><strong>Starfall</strong>About 1,400 lines of canvas JavaScript with streak multipliers, a difficulty ramp, sound, a pause menu and saved high scores.</span>
+            </button>
+          </li>
+          <li class="badge" data-state="unlocked" style="--c:var(--violet)">
+            <button class="badge-card" type="button" aria-pressed="false">
+              <span class="face front"><span class="medal"><svg aria-hidden="true"><use href="#ic-map"/></svg></span><strong>Five-stage architect</strong><small>Nov 2026</small></span>
+              <span class="face back"><strong>Planned before coding</strong>Wrote five build plans (core logic, visuals, sound, storage, debugging) and followed them stage by stage.</span>
+            </button>
+          </li>
+          <li class="badge" data-state="unlocked" style="--c:var(--teal)">
+            <button class="badge-card" type="button" aria-pressed="false">
+              <span class="face front"><span class="medal"><svg aria-hidden="true"><use href="#ic-branch"/></svg></span><strong>Went live on GitHub</strong><small>Nov 2026</small></span>
+              <span class="face back"><strong>First repository</strong>Pushed my coursework to a public GitHub repo so anyone can read the code.</span>
+            </button>
+          </li>
+          <li class="badge" data-state="unlocked" style="--c:var(--gold)">
+            <button class="badge-card" type="button" aria-pressed="false">
+              <span class="face front"><span class="medal"><svg aria-hidden="true"><use href="#ic-code"/></svg></span><strong>Hello, Python</strong><small>Oct 2026</small></span>
+              <span class="face back"><strong>First scripts</strong>An animated sine wave in the terminal and a Women in STEM clue game.</span>
+            </button>
+          </li>
+          <li class="badge" data-state="unlocked" style="--c:var(--coral)">
+            <button class="badge-card" type="button" aria-pressed="false">
+              <span class="face front"><span class="medal"><svg aria-hidden="true"><use href="#ic-window"/></svg></span><strong>Built an OS in a browser</strong><small>Nov 2026</small></span>
+              <span class="face back"><strong>This site</strong>Draggable windows, a magnifying Dock and saved settings, with zero frameworks.</span>
+            </button>
+          </li>
+          <li class="badge" data-state="unlocked" style="--c:var(--violet)">
+            <button class="badge-card" type="button" aria-pressed="false">
+              <span class="face front"><span class="medal"><svg aria-hidden="true"><use href="#ic-book"/></svg></span><strong>Triple threat</strong><small>In progress</small></span>
+              <span class="face back"><strong>A-Levels</strong>Taking Computer Science, Maths and Physics at the same time.</span>
+            </button>
+          </li>
+          <li class="badge" data-state="locked" style="--c:var(--teal)">
+            <button class="badge-card" type="button" aria-pressed="false">
+              <span class="face front"><span class="medal"><svg aria-hidden="true"><use href="#ic-rocket"/></svg></span><strong>Publish a game</strong><small><svg aria-hidden="true"><use href="#ic-lock"/></svg> Locked</small></span>
+              <span class="face back"><strong>Goal</strong>Release a game that strangers can find and play. Starfall 2.0 is the plan.</span>
+            </button>
+          </li>
+          <li class="badge" data-state="locked" style="--c:var(--gold)">
+            <button class="badge-card" type="button" aria-pressed="false">
+              <span class="face front"><span class="medal"><svg aria-hidden="true"><use href="#ic-commit"/></svg></span><strong>100 commits</strong><small><svg aria-hidden="true"><use href="#ic-lock"/></svg> Locked</small></span>
+              <span class="face back"><strong>Goal</strong>Reach 100 commits on GitHub by shipping something small every week.</span>
+            </button>
+          </li>
+          <li class="badge" data-state="locked" style="--c:var(--coral)">
+            <button class="badge-card" type="button" aria-pressed="false">
+              <span class="face front"><span class="medal"><svg aria-hidden="true"><use href="#ic-cap"/></svg></span><strong>University offer</strong><small><svg aria-hidden="true"><use href="#ic-lock"/></svg> Locked</small></span>
+              <span class="face back"><strong>Goal</strong>Get an offer to study Computer Science.</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <span class="grip" aria-hidden="true"></span>
+    </section>
+
+    <!-- ===================== WINDOW: System Settings ===================== -->
+    <section class="window win-settings" id="win-settings" data-app="settings" role="dialog" aria-labelledby="t-settings" tabindex="-1" hidden>
+      <div class="titlebar">
+        <div class="traffic">
+          <button class="tl close" type="button" data-action="close" aria-label="Close"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5"/></svg></button>
+          <button class="tl min" type="button" data-action="minimize" aria-label="Minimise"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.8 6h6.4"/></svg></button>
+          <button class="tl max" type="button" data-action="maximize" aria-label="Zoom"><svg viewBox="0 0 12 12" aria-hidden="true"><path class="fill" d="M3.2 8.8V4.4l4.4 4.4zM8.8 3.2v4.4L4.4 3.2z"/></svg></button>
+        </div>
+        <h2 class="win-title" id="t-settings">System Settings</h2>
+      </div>
+      <div class="win-body settings">
+        <aside class="sidebar" role="tablist" aria-label="Settings sections" aria-orientation="vertical">
+          <div class="me-card">
+            <span class="avatar avatar-sm"><img class="avatar-img" src="photo.png" alt=""><span class="avatar-initials">KA</span></span>
+            <span><strong>Khuzaima Amir</strong><small>Portfolio account</small></span>
+          </div>
+          <button class="side-item active" type="button" role="tab" id="stab-appearance" aria-selected="true" aria-controls="spanel-appearance" data-spanel="appearance"><span class="sq" style="--c:#4A4857"><svg aria-hidden="true"><use href="#ic-appearance"/></svg></span>Appearance</button>
+          <button class="side-item" type="button" role="tab" id="stab-wallpaper" aria-selected="false" aria-controls="spanel-wallpaper" data-spanel="wallpaper" tabindex="-1"><span class="sq" style="--c:#1FA58E"><svg aria-hidden="true"><use href="#ic-image"/></svg></span>Wallpaper</button>
+          <button class="side-item" type="button" role="tab" id="stab-dock" aria-selected="false" aria-controls="spanel-dock" data-spanel="dock" tabindex="-1"><span class="sq" style="--c:#7B5CFF"><svg aria-hidden="true"><use href="#ic-dock"/></svg></span>Dock &amp; Motion</button>
+        </aside>
+
+        <div class="settings-main">
+          <section class="spanel" id="spanel-appearance" role="tabpanel" aria-labelledby="stab-appearance">
+            <h3>Appearance</h3>
+            <fieldset class="group">
+              <legend>Theme</legend>
+              <div class="theme-tiles">
+                <label class="tile"><input type="radio" name="theme" value="light"><span class="tile-art t-light" aria-hidden="true"><i></i></span><span>Light</span></label>
+                <label class="tile"><input type="radio" name="theme" value="dark"><span class="tile-art t-dark" aria-hidden="true"><i></i></span><span>Dark</span></label>
+                <label class="tile"><input type="radio" name="theme" value="auto"><span class="tile-art t-auto" aria-hidden="true"><i></i></span><span>Auto</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="group">
+              <legend>Accent colour</legend>
+              <div class="swatches">
+                <label class="swatch" style="--c:var(--coral)"><input type="radio" name="accent" value="coral"><span class="sr-only">Coral</span></label>
+                <label class="swatch" style="--c:var(--violet)"><input type="radio" name="accent" value="violet"><span class="sr-only">Violet</span></label>
+                <label class="swatch" style="--c:var(--teal)"><input type="radio" name="accent" value="teal"><span class="sr-only">Teal</span></label>
+                <label class="swatch" style="--c:var(--gold)"><input type="radio" name="accent" value="gold"><span class="sr-only">Gold</span></label>
+                <span class="swatch-name" id="accent-name">Coral</span>
+              </div>
+            </fieldset>
+          </section>
+
+          <section class="spanel" id="spanel-wallpaper" role="tabpanel" aria-labelledby="stab-wallpaper" hidden>
+            <h3>Wallpaper</h3>
+            <fieldset class="group">
+              <legend>Dynamic wallpapers</legend>
+              <div class="wp-tiles">
+                <label class="tile"><input type="radio" name="wallpaper" value="aurora"><span class="tile-art wp-aurora" aria-hidden="true"></span><span>Aurora</span></label>
+                <label class="tile"><input type="radio" name="wallpaper" value="sunset"><span class="tile-art wp-sunset" aria-hidden="true"></span><span>Sunset</span></label>
+                <label class="tile"><input type="radio" name="wallpaper" value="lagoon"><span class="tile-art wp-lagoon" aria-hidden="true"></span><span>Lagoon</span></label>
+                <label class="tile"><input type="radio" name="wallpaper" value="midnight"><span class="tile-art wp-midnight" aria-hidden="true"></span><span>Midnight</span></label>
+              </div>
+            </fieldset>
+          </section>
+
+          <section class="spanel" id="spanel-dock" role="tabpanel" aria-labelledby="stab-dock" hidden>
+            <h3>Dock &amp; Motion</h3>
+            <div class="group rows">
+              <label class="row"><span>Size</span><input type="range" id="dock-size" min="42" max="68" step="1"></label>
+              <label class="row"><span>Magnification</span><input type="checkbox" class="switch" id="magnify" role="switch"></label>
+              <label class="row"><span>Reduce motion</span><input type="checkbox" class="switch" id="reduce-motion" role="switch"></label>
+            </div>
+          </section>
+
+          <button class="btn subtle reset-btn" type="button" id="reset-settings">Restore defaults</button>
+        </div>
+      </div>
+      <span class="grip" aria-hidden="true"></span>
+    </section>
+
+    <!-- ===================== WINDOW: Trash ===================== -->
+    <section class="window win-trash" id="win-trash" data-app="trash" role="dialog" aria-labelledby="t-trash" tabindex="-1" hidden>
+      <div class="titlebar">
+        <div class="traffic">
+          <button class="tl close" type="button" data-action="close" aria-label="Close"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5"/></svg></button>
+          <button class="tl min" type="button" data-action="minimize" aria-label="Minimise"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.8 6h6.4"/></svg></button>
+          <button class="tl max" type="button" data-action="maximize" aria-label="Zoom"><svg viewBox="0 0 12 12" aria-hidden="true"><path class="fill" d="M3.2 8.8V4.4l4.4 4.4zM8.8 3.2v4.4L4.4 3.2z"/></svg></button>
+        </div>
+        <h2 class="win-title" id="t-trash">Trash</h2>
+      </div>
+      <div class="win-body trash">
+        <div class="trash-bar">
+          <p>Things I've learned to let go of</p>
+          <button class="btn danger" type="button" id="empty-trash">Empty Trash</button>
+        </div>
+        <ul class="trash-list" id="trash-list">
+          <li><svg aria-hidden="true"><use href="#ic-doc"/></svg><span>first_attempt_FINAL_v3.py</span><small>4 KB</small></li>
+          <li><svg aria-hidden="true"><use href="#ic-doc"/></svg><span>Starfall (plain rectangles edition)</span><small>Stage 1</small></li>
+          <li><svg aria-hidden="true"><use href="#ic-doc"/></svg><span>bug_list.txt</span><small>847 KB</small></li>
+          <li><svg aria-hidden="true"><use href="#ic-folder"/></svg><span>missing_semicolons/</span><small>12 items</small></li>
+          <li><svg aria-hidden="true"><use href="#ic-doc"/></svg><span>I'll do it tomorrow.app</span><small>∞</small></li>
+        </ul>
+        <div class="trash-empty" id="trash-empty" hidden>
+          <svg aria-hidden="true"><use href="#i-trash-empty"/></svg>
+          <p>Trash is empty. Fresh start.</p>
+          <button class="btn subtle" type="button" id="restore-trash">Put everything back</button>
+        </div>
+      </div>
+      <span class="grip" aria-hidden="true"></span>
+    </section>
+  </main>
+
+  <!-- =========================================================
+       DOCK
+       ========================================================= -->
+  <div class="dock-wrap">
+    <div class="dock" id="dock" role="toolbar" aria-label="Dock">
+      <button class="dock-item" type="button" data-app="finder" aria-label="Finder: projects"><span class="dock-label">Finder</span><svg class="dock-icon" aria-hidden="true"><use href="#i-finder"/></svg><span class="dock-dot"></span></button>
+      <button class="dock-item" type="button" data-app="safari" aria-label="Safari: links and Homework 6/7"><span class="dock-label">Safari</span><svg class="dock-icon" aria-hidden="true"><use href="#i-safari"/></svg><span class="dock-dot"></span></button>
+      <button class="dock-item" type="button" data-app="notes" aria-label="Notes: future plans"><span class="dock-label">Notes</span><svg class="dock-icon" aria-hidden="true"><use href="#i-notes"/></svg><span class="dock-dot"></span></button>
+      <button class="dock-item" type="button" data-app="photos" aria-label="Photos: about me"><span class="dock-label">Photos</span><svg class="dock-icon" aria-hidden="true"><use href="#i-photos"/></svg><span class="dock-dot"></span></button>
+      <button class="dock-item" type="button" data-app="achievements" aria-label="Achievements"><span class="dock-label">Achievements</span><svg class="dock-icon" aria-hidden="true"><use href="#i-trophy"/></svg><span class="dock-dot"></span></button>
+      <button class="dock-item" type="button" data-app="settings" aria-label="System Settings"><span class="dock-label">System Settings</span><svg class="dock-icon" aria-hidden="true"><use href="#i-settings"/></svg><span class="dock-dot"></span></button>
+      <span class="dock-sep" aria-hidden="true"></span>
+      <button class="dock-item" type="button" data-app="welcome" aria-label="About This Portfolio"><span class="dock-label">About This Portfolio</span><svg class="dock-icon" aria-hidden="true"><use href="#i-about"/></svg><span class="dock-dot"></span></button>
+      <button class="dock-item" type="button" data-app="trash" aria-label="Trash"><span class="dock-label">Trash</span><svg class="dock-icon" aria-hidden="true"><use href="#i-trash-full" id="trash-use"/></svg><span class="dock-dot"></span></button>
+    </div>
+  </div>
+
+  <!-- Right-click menu for the desktop -->
+  <div class="menu context-menu" id="context-menu" role="menu" aria-label="Desktop" hidden>
+    <button type="button" role="menuitem" data-open="welcome">About This Portfolio</button>
+    <hr>
+    <button type="button" role="menuitem" data-cmd="next-wallpaper">Next Wallpaper</button>
+    <button type="button" role="menuitem" data-open="settings" data-spanel-go="wallpaper">Change Wallpaper…</button>
+    <hr>
+    <button type="button" role="menuitem" data-cmd="tidy">Tidy Up Windows</button>
+    <button type="button" role="menuitem" data-cmd="close-all">Close All Windows</button>
+  </div>
+
+  <!-- Notification toast -->
+  <div class="toast" id="toast" role="status" hidden>
+    <svg class="toast-icon" aria-hidden="true"><use href="#i-about"/></svg>
+    <div>
+      <p class="toast-title">Welcome to Portfolio OS</p>
+      <p class="toast-body">Open an app from the Dock below, or click <b>Read Me.txt</b> on the desktop.</p>
+    </div>
+    <button class="icon-btn toast-close" type="button" id="toast-close" aria-label="Dismiss"><svg aria-hidden="true"><use href="#ic-close"/></svg></button>
+  </div>
+
+  <canvas class="sparkles" id="sparkles" aria-hidden="true"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
